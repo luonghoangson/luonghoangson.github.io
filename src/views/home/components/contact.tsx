@@ -265,7 +265,7 @@ const Contact: React.FC<Component1Props> = ({ className, setIsLoading }) => {
                   </Form.Group>
                 </Row>
                 <ReCAPTCHA
-                  sitekey="6LfnoJ4pAAAAAGJOjCj_Hh6_onbKprqTF8wH0j1r"
+                  sitekey="6LcVeK8pAAAAAHpC0f6xPmMwhB8briOmqboKhATw"
                   onChange={handleCaptchaChange}
                 />
                 <Button className='btnSty mt-4' type="submit">Submit form</Button>
