@@ -1,0 +1,14 @@
+.lightMode {background-color: $light;
+    .me-timeline:before {background-color: rgba($dark, 0.1);}
+    .btnSty-download {
+        i, span {color: $blue_d1;}
+        &:hover {
+            i, span {color: $white;}
+        }
+    }
+    footer {border-color: rgba(0, 0, 0, 0.1);}
+}
+.darkMode {background-color: $dark;
+    .me-timeline:before {background-color: rgba($white, 0.1);}
+    footer {border-color: rgba(255, 255, 255, 0.1);}
+}

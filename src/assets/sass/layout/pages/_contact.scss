@@ -1,0 +1,44 @@
+.contact {
+  &-form {
+    .form-floating label {color: $dark;}
+  }
+  &-info {
+    i {color: $col_main;}
+  }
+  &-sns {
+    &-items {display: inline-block; @include size(48px); line-height: 48px; position: relative; text-align: center; transition: 0.35s;
+      & + & {margin-left: 15px;}
+      i {color: $white;}
+      &:before {
+        content: "";
+        @include size(70%);
+        @include position(absolute, 50%, null, null, 50%);
+        @include css3-prefix(transform, translate(-50%, -50%) rotate(45deg));
+        background-color: $col_main;
+        border: solid 1px $col_main;
+        transition: 0.35s;
+        z-index: -1;
+      }
+      &:hover {transform: scale(1.3);
+        i {color: $col_main;}
+        &:before {@include css3-prefix(transform, translate(-50%, -50%) rotate(135deg)); background-color: transparent;}
+      }
+    }
+  }
+}
+.modal {
+  &-title {color: $col_main;}
+  &-body {
+    * {color: $dark;}
+  }
+}
+.confirm-infos {@include pd(x, 30px, 15px);
+  dl {display: flex; @include pd(y, 15px); margin-bottom: 0;
+    &:not(:last-child) {border-bottom: dashed 1px $dark;}
+    dt {width: 35%;}
+    dd {margin-bottom: 0;}
+    @include resp(md) {
+      dt {width: 25%;}
+    }
+  }
+}

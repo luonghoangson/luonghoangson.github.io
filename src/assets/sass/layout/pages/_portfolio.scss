@@ -1,0 +1,72 @@
+.p {
+  &-items {position: relative; width: 100%; perspective: 1000px; cursor: pointer; margin-bottom: 30px; z-index: 1;
+    &-body, &__glass {
+      @include size(100%);
+      perspective-origin: 50% 50%;
+      transform-style: preserve-3d;
+      transform-origin: top center;
+      will-change: transform;
+      transform: skewX(.001deg);
+      transition: transform .35s ease-in-out;
+    }
+    &__glass {overflow: hidden; z-index: 3;
+      &:after {
+        content: '';
+        display: block;
+        @include position(absolute, 0, null, null, 0);
+        @include size(100%, 120%);
+        background: linear-gradient(226deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.4) 35%, rgba(255,255,255,0.2) 42%, rgba(255,255,255,0) 60%);
+        transform: translateY(-10%);
+        will-change: transform;
+        transition: transform .65s cubic-bezier(0.18, 0.9, 0.58, 1);
+        z-index: 100;
+      }
+    }
+    &-body {@include position(absolute, 0, null, null, 0); @include flex(center, center); z-index: 2;
+      h4 {color: $white !important; font-family: "Protest Strike", sans-serif; transition: opacity .35s ease-in-out; opacity: 0;}
+      &:after{
+        content: '';
+        @include position(absolute, 0, null, null, 0);
+        @include size(100%);
+        display: block;
+        background-color: rgba($dark, 0.5);
+        mix-blend-mode: lighten;
+        transition: all 0.5s ease;
+        transform-origin: center;
+        transform: scale(0);
+        z-index: 1;
+      }
+    }
+    &:before {
+      content: '';
+      display: block;
+      @include position(absolute, 5%, null, null, 5%);
+      @include size(90%, 90%);
+      background: rgba($white, 0.5);
+      box-shadow: 0 6px 12px 12px rgba($black, 0.4);
+      will-change: opacity;
+      transform-origin: top center;
+      transform: skewX(.001deg);
+      transition: transform .35s ease-in-out, opacity .5s ease-in-out;
+    }
+    &:hover &__glass {transform: rotateX(10deg) translateY(-6px);
+      &:after {transform: translateY(0%);}
+    }
+    &:hover &-body {
+      * {opacity: 1;}
+      &:after{transform: scale(1);}
+    }
+    &:hover {
+      &:before {opacity: 0.6; transform: rotateX(10deg) translateY(-6px) scale(1.05);}
+    }
+  }
+}
+.prod {
+  &-items {position: relative;
+    &-desc {@include pd(all, 0 var(--bs-modal-padding) var(--bs-modal-padding) var(--bs-modal-padding), var(--bs-modal-padding));
+      @include resp(lg) {@include size(62.33333333%, 25%); @include position(absolute, null, null, var(--bs-modal-padding), 0);
+        & .--r {left: auto; right: 0;}
+      }
+    }
+  }
+}

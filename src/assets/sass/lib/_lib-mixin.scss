@@ -1,0 +1,279 @@
+$xxs: 320px;
+$xs: 415px;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+/* ======================
+Breakpoint for responsive
+====================== */
+@mixin resp($canvas) {
+    @if $canvas == xs {
+        @media (min-width: 1px) and (max-width: $xxs) { @content; }
+    }
+    @else if $canvas == sm {
+        @media (min-width: $xxs) and (max-width: $xs) { @content; }
+    }
+    @else if $canvas == md {
+        @media only screen and (min-width: $md) { @content; }
+    }
+    @else if $canvas == lg {
+        @media only screen and (min-width: $lg) { @content; }
+    }
+    @else if $canvas == xl {
+        @media only screen and (min-width: $xl) { @content; }
+    }
+    @else if $canvas == xxl {
+        @media only screen and (min-width: $xxl) { @content; }
+    }
+}
+@mixin respOnly($breakpoint_min, $breakpoint_max) {
+	@media only screen and (min-width: $breakpoint_min) and (max-width: $breakpoint_max) {	@content;	}
+}
+
+@mixin css3-prefix($prop, $value) {
+    -webkit-#{$prop}: #{$value};
+    -moz-#{$prop}: #{$value};
+    -ms-#{$prop}: #{$value};
+    -o-#{$prop}: #{$value};
+    #{$prop}: #{$value};
+}
+
+@mixin transition($time: 0.25s, $timing-function: ease-in-out) {
+    @include css3-prefix(transition, all $time $timing-function);
+}
+
+@mixin bgGrad($deg, $f-col, $l-col, $val) {
+    // background-color: $f-col;
+    background-image: -webkit-linear-gradient( $deg, $val );
+    background-image:    -moz-linear-gradient( $deg, $val );
+    background-image:     -ms-linear-gradient( $deg, $val );
+    background-image:      -o-linear-gradient( $deg, $val );
+    background-image:         linear-gradient( $deg, $val );
+    filter:            progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$f-col}', endColorStr='#{$l-col}', GradientType=1);
+}
+
+/* ======================
+====== Grid layout ======
+====================== */
+@mixin grid_eq($col, $row, $mg, $col_pc: $col, $row_pc: $row, $mg_pc: $mg,) {
+    display: grid;
+    grid-template-columns: repeat($col, 1fr);
+    grid-template-rows: repeat($row, minmax(100px, auto));
+    grid-column-gap: $mg;
+    grid-row-gap: $mg;
+    @include resp(md) {
+        grid-template-columns: repeat($col_pc, 1fr);
+        grid-template-rows: repeat($row_pc, minmax(100px, auto));
+        grid-column-gap: $mg_pc;
+        grid-row-gap: $mg_pc;
+    }
+}
+
+/* ======================
+= Custom color for link =
+====================== */
+@mixin linkColor($default, $decoration: none, $hover: $default, $active: $default, $focus: $default, $visited: $default) {
+    color: $default;
+    text-decoration: $decoration;
+    &:hover {color: $hover; text-decoration: $decoration;}
+    &:active {color: $active;}
+    &:focus {color: $focus;}
+    &:visited {color: $visited;}
+}
+
+/* ======================
+===== Draw Element ======
+====================== */
+@mixin size($width, $height: $width) { width: $width; height: $height; }
+@mixin boxShadow($n: 1, $x: 0, $y: 0, $blur: 0, $col: #000, $inset: null) {
+    @include css3-prefix('box-shadow', style-Shadow($n, $x, $y, $blur, $col, $inset));
+}
+@mixin boxShadow_mul($param...) {
+    @include css3-prefix('box-shadow', $param);
+}
+@mixin border-radius($all: 999px) {
+    @include css3-prefix('border-radius', $all);
+}
+/* === Equal Element === */
+@mixin divSquare($pd: 15px, $color: transparent) {
+    &:before {content: ""; display: block; padding-bottom: 100%; z-index: -1; background-color: $color;}
+    &__cont {position: absolute; top: 0; left: 15px; @include size(calc(100% - 30px) !important, 100% !important); padding: $pd;}
+}
+/* === SHAPE === */
+@mixin triangle($direction: "up", $x: 50px, $y: 100px, $col: red) {
+    @if $direction == "up" {
+        border-left: $x solid transparent;
+        border-right: $x solid transparent;
+        border-bottom: $y solid $col;
+    } @else if $direction == "down" {
+        border-left: $x solid transparent;
+        border-right: $x solid transparent;
+        border-top: $y solid $col;
+    } @else if $direction == "left" {
+        border-top: $x solid transparent;
+        border-right: $y solid $col;
+        border-bottom: $x solid transparent;
+    } @else if $direction == "right" {
+        border-top: $x solid transparent;
+        border-left: $y solid $col;
+        border-bottom: $x solid transparent;
+    } @else if $direction == "tl" {
+        border-top: $x solid $col;
+        border-right: $x solid transparent;
+    } @else if $direction == "tr" {
+        border-top: $x solid $col;
+        border-left: $x solid transparent;
+    } @else if $direction == "bl" {
+        border-bottom: $x solid $col;
+        border-right: $x solid transparent;
+    } @else if $direction == "br" {
+        border-bottom: $x solid $col;
+        border-left: $x solid transparent;
+    }
+}
+
+/* ======================
+======= Text Css ========
+====================== */
+@mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
+    @font-face {
+        font-family: quote($font-name);
+        src: url("" + $file-name + '.eot' + "");
+        src: url("" + $file-name + '.eot?#iefix' + "")  format('embedded-opentype'),
+        url("" + $file-name + '.woff' + "") format('woff'),
+        url("" + $file-name + '.ttf' + "")  format('truetype'),
+        url("" + $file-name + '.svg##{$font-name}' + "")  format('svg');
+        font-weight: $weight;
+        font-style: $style;
+    }
+}
+@mixin txtCut($num) { overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: $num; display: -webkit-box; -webkit-box-orient: vertical; }
+@mixin fSize($pc, $sp: $pc) { font-size: $sp;
+    @include resp(md) {font-size: $pc;}
+}
+@mixin txtGrad($deg, $col1, $col2) {
+    background: linear-gradient($deg, $col1, $col2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: cover;
+}
+@mixin txtShadow($n: 1, $all: null, $x: null, $y: null, $blur: null, $col: null) {
+    @if $n == "nor" {
+        text-shadow: $all;
+    } @else {
+        text-shadow: style-Shadow($n, $x, $y, $blur, $col);
+    }
+}
+
+/* ======================
+===== Align Element =====
+====================== */
+@mixin pd($x: all, $val_pc: 0, $val_sp: $val_pc) {
+    @if $x == "all" {
+        padding: $val_sp;
+        @include resp(md) {padding: $val_pc;}
+    } @else if $x == "x" {
+        padding-left: $val_sp; padding-right: $val_sp;
+        @include resp(md) {padding-left: $val_pc; padding-right: $val_pc;}
+    } @else if $x == "y" {
+        padding-top: $val_sp; padding-bottom: $val_sp;
+        @include resp(md) {padding-top: $val_pc; padding-bottom: $val_pc;}
+    } @else if $x == "t" {
+        padding-top: $val_sp;
+        @include resp(md) {padding-top: $val_pc;}
+    } @else if $x == "r" {
+        padding-right: $val_sp;
+        @include resp(md) {padding-right: $val_pc;}
+    } @else if $x == "b" {
+        padding-bottom: $val_sp;
+        @include resp(md) {padding-bottom: $val_pc;}
+    } @else if $x == "l" {
+        padding-left: $val_sp;
+        @include resp(md) {padding-left: $val_pc;}
+    }
+}
+@mixin mg($x: all, $val_pc: 0, $val_sp: $val_pc) {
+    @if $x == "all" {
+        margin: $val_sp;
+        @include resp(md) {margin: $val_pc;}
+    } @else if $x == "x" {
+        margin-left: $val_sp; margin-right: $val_sp;
+        @include resp(md) {margin-left: $val_pc; margin-right: $val_pc;}
+    } @else if $x == "y" {
+        margin-top: $val_sp; margin-bottom: $val_sp;
+        @include resp(md) {margin-top: $val_pc; margin-bottom: $val_pc;}
+    } @else if $x == "t" {
+        margin-top: $val_sp;
+        @include resp(md) {margin-top: $val_pc;}
+    } @else if $x == "r" {
+        margin-right: $val_sp;
+        @include resp(md) {margin-right: $val_pc;}
+    } @else if $x == "b" {
+        margin-bottom: $val_sp;
+        @include resp(md) {margin-bottom: $val_pc;}
+    } @else if $x == "l" {
+        margin-left: $val_sp;
+        @include resp(md) {margin-left: $val_pc;}
+    }
+}
+
+// active js
+// function parallax() {
+//   var scrollPos = $(window).scrollTop();
+//   $(".bgParallax").css("top", (0 - (scrollPos * .2)) + 'px');
+// }
+@mixin bgParallax($url, $height) {
+    position: fixed;
+    width: calc(100% + 30px);
+    top: 0;
+    left: -15px;
+    z-index: -1;
+    height: $height;
+    background-image: url($url);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+@mixin posC($pos: center) {
+    position: absolute;
+    @if $pos == "center" {
+        top: 50%; left: 50%;
+        @include css3-prefix(transform, translate(-50%, -50%));
+    } @else if $pos == "centerX" {
+        left: 50%;
+        @include css3-prefix(transform, translateX(-50%));
+    } @else if $pos == "centerY" {
+        top: 50%;
+        @include css3-prefix(transform, translateY(-50%));
+    }
+}
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+    position: $position; top: $top; right: $right; bottom: $bottom; left: $left;
+}
+
+@mixin flex($posX: start, $posY: start) {
+    display: flex;
+    @if $posX == "start" { }
+    @else if $posX == "end" { justify-content: flex-end; }
+    @else if $posX == "center" { justify-content: center; }
+    @else if $posX == "between" { justify-content: space-between; }
+    @else if $posX == "around" { justify-content: space-around; }
+    @if $posY == "start" { }
+    @else if $posY == "end" { align-items: flex-end; }
+    @else if $posY == "center" { align-items: center; }
+}
+
+@mixin animation($str) {
+    @include css3-prefix('animation', $str);
+}
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} { @content; }
+    @-moz-keyframes #{$animation-name} { @content; }
+    @-ms-keyframes #{$animation-name} { @content; }
+    @-o-keyframes #{$animation-name} { @content; }
+    @keyframes #{$animation-name} { @content; }
+}

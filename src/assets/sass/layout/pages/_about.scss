@@ -1,0 +1,92 @@
+.avatar {
+  &-cont {
+    --inset: 0.5vmin;
+    --color0: #0ac;
+    --color1: #222;
+    --duration: 5s;
+    --bgcolor0: #0aca;
+    --bgcolor1: #222a;
+
+    width: 60%;
+    @include pd(y, 0, 20%);
+    @include resp(md) {width: 70%; margin-top: 15%; margin-bottom: 15%;}
+    @include resp(lg) {margin-bottom: 0;}
+  }
+  &-img {
+    rotate: 45deg; 
+    overflow: hidden;
+    box-shadow: inset 0 0 10px black, 0 0 10px black;
+    filter: drop-shadow(0 0 10px var(--color0)) saturate(1);
+    p {inline-size: 100%; block-size: 100%; overflow: hidden; margin-bottom: 0; clip-path: inset(var(--inset));
+      img {display: block; inline-size: 100%; block-size: 100%; object-fit: cover; rotate: -45deg; scale: 1.6;}    
+    }
+    &:before {
+      content: '';
+      display: block;
+      inline-size: 100%;
+      block-size: 100%;
+      position: absolute;
+      background: repeating-conic-gradient(transparent, var(--color0) 25deg, var(--color1) 22.5deg, transparent 90deg);
+      animation: var(--duration) f linear infinite;
+      scale: 1.6;
+      @keyframes f {
+        0% { rotate: 0; }
+        100% { rotate: 1turn; }
+      }
+    }
+  }
+}
+@supports not (rotate: 0deg) {
+  .avatar {
+    &-img {transform: rotate(45deg);
+      p {
+        img {@include css3-prefix(transform, rotate(-45deg) scale(1.6));}
+      }
+      &:before {@include css3-prefix(transform, scale(1.6)); animation-name: g;}
+    }
+  }
+  @keyframes g {
+    0% { @include css3-prefix(transform, rotate(0) scale(1.6)); }
+    100% { @include css3-prefix(transform, rotate(1turn) scale(1.6)); }
+  }
+}
+.me {
+  &-overviews {
+    span {color: var(--co_main);}
+  }
+  &-timeline {
+    @include pd(t, 60px, 40px);
+    @include pd(b, 100px, 40px);
+    @include mg(t, 60px, 40px);
+    position: relative;
+    &:before {content: ""; @include size(75%, 1px); @include posC(centerX); top: 0;}
+    &-list {padding-left: 25px; list-style: none; position: relative;
+      &:before {content: ""; @include size(1px, calc(100% + 50px)); background-color: var(--timelines-dots); @include position(absolute, 0, null, null, 25px);}
+      .list-items {position: relative; padding-left: 40px; padding-top: 4px;
+        &:not(:last-child) {@include mg(b, 100px, 50px);}
+        &:before {content: ""; @include size(30px); rotate: 45deg; @include position(absolute, 0, null, null, -15px); transition: 0.35s; background-color: var(--timelines-dots); z-index: 0;}
+        &:after {content: "\f107"; color: $white; font-family: "Font Awesome 5 Free"; font-size: 28px; font-weight: 900; @include position(absolute, -5px, null, null, -9px); transition: 0.35s; z-index: 1;}
+        &-body {transition: 0.35s; transform-origin: top left; @include css3-prefix(transform, translateY(-26px));}
+        &_y {margin-bottom: 0;}
+        &_p {font-family: "Protest Strike", sans-serif; font-weight: bold; margin-bottom: 5px; color: $col_main;
+          &2 {font-weight: bold; margin-bottom: 15px;}
+        }
+        &.active {
+          &:before {transform: scale(1.3); rotate: 135deg; background-color: $col_main;}
+          &:after {rotate: -90deg;}
+        }
+      }
+    }
+    @include resp(md) {
+      
+    }
+    @include resp(lg) {
+      &-list {padding-left: 20%;
+        &:before {left: 20%;}
+      }
+      .list-items.active {
+        .list-items-body {@include css3-prefix(transform, translateY(-36px) scale(1.2));}
+      }
+    }
+  }
+}

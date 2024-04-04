@@ -1,0 +1,339 @@
+/*===== effect: text hover =====*/
+/*_____ effect sp menu zoom _____*/
+.mZoom {@include css3-prefix(transform, scale(1.2)); @include transition(1.4s, cubic-bezier(0.2, 0.9, 0.35, 1.11));
+    @at-root #{selector-parent(&, 1)} {
+        .act & {@include css3-prefix(transform, scale(1));}
+    }
+    @include resp(md) {@include css3-prefix(transform, scale(1));}
+}
+
+/*_____ underline _____*/
+@mixin effect-underline($x: 0px, $h: 1px, $b: -2px, $color: #000) {
+    $w: calc(100% + #{$x}*2);
+    $l: -$x;
+    &:before {
+        content: '';
+        position: absolute;
+        left: $l;
+        bottom: $b;
+        display: inline-block;
+        height: 1em;
+        width: $w;
+        border-bottom: $h solid;
+        border-color: $color;
+        opacity: 0;
+        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+        transition: opacity 0.35s, transform 0.35s;
+        -webkit-transform: scale(0,1);
+        transform: scale(0,1);
+    }
+    &:hover:before, &.active:before {opacity: 1; -webkit-transform: scale(1); transform: scale(1);}
+}
+
+/*_____ bg under text _____*/
+@mixin effect-hover($w: 100%, $h: 1px, $color: #000) {
+    position: relative; z-index: 1; display: block;
+    a {display: inline-block; position: relative; text-decoration: none; padding: 10px 0 0; transition: 0;
+        &:before {
+            content:'';
+            position: absolute;
+            @include size($w, $h);
+            @include css3-prefix(transform-origin, bottom right);
+            @include css3-prefix(transform, scaleX(0));
+            top: 0;
+            left: -8px;
+            background-color: $color;
+            transition: transform 0.25s;
+            z-index: -1;
+        }
+        &:hover {color: $white !important;
+            &:before {transform-origin: bottom left; transform: scaleX(1);}
+        }
+    }
+}
+
+/*_____ bg over text _____*/
+.eff-bg-run {@include animation('bgRun-right_txt 0.4s'); @include css3-prefix(transform, scaleX(1) !important);
+    &:before {content: ""; @include size(100%); @include animation('bgRun-right_bg 0.6s'); position: absolute; top: 0; left: 0;}
+}
+
+/*_____ change text _____*/
+.effChange {cursor: pointer;
+    &-txt__change {overflow: hidden; padding: 0; line-height: 1;
+        span {position: relative; display: block; transition: 0.3s;
+            &:before {content: attr(data-hover); position: absolute; top: 100%; @include css3-prefix(transform, translate3d(0,0,0));}
+            &:after {content: attr(data-name); position: absolute; top: 200%; left: 0; @include css3-prefix(transform, translate3d(0,0,0));}
+        }
+    }
+    @include resp(md) {
+        .copyTxt_txt {display: inline-block; position: relative; text-decoration: none;
+            &:after {
+                content:'';
+                @include size(100%, 1px);
+                position: absolute;
+                bottom: 5px;
+                left: 0;
+                background-color: $black;
+                @include css3-prefix(transform, scaleX(0));
+                transform-origin: bottom right;
+                transition: transform 0.3s;
+            }
+        }
+        &:hover .effChange-txt__change span, &:focus .effChange-txt__change span {@include css3-prefix(transform, translateY(-100%));}
+        &:hover .copyTxt_txt:after {transform-origin: bottom left; @include css3-prefix(transform, scaleX(1));}
+        &.is_copy .effChange-txt__change span {@include css3-prefix(transform, translateY(-200%));}
+        &-txt__change:hover {opacity: 1 !important;}
+    }
+}
+
+/*===== effect: show element =====*/
+.efade {opacity: 0; transition: 0.75s; @include css3-prefix('transform', translateY(10%));
+    &.non {opacity: 1; @include css3-prefix('transform', translateY(0));}
+    &-l {@include css3-prefix('transform', translateX(-10%));}
+    &-r {@include css3-prefix('transform', translateX(10%));}
+    &-none {@include css3-prefix('transform', translateY(0));}
+}
+.txt-action {opacity: 0; position: relative;
+	&_l {transform: translate3d(-40px,-20px,0) skewY(-15deg) skewX(-10deg); transform-origin: right top;}
+	&_r {transform: translate3d(30px,30px,0) skewY(15deg) skewX(10deg); transform-origin: left top;}
+	&.act {transform: translate3d(0,0,0) skewY(0deg) skewX(0deg); opacity: 1; transition: transform 1s cubic-bezier(.08,.92,.35,1),opacity 1s;}
+}
+.scaleIn {transform: scale(0);
+    &.in {animation: zoomIn 0.7s ease forwards;}
+}
+
+/*===== effect: text blur =====*/
+@mixin txt-blur($time) {
+    @include animation(blurFadeInOut $time ease-in backwards);
+}
+@include keyframes(blurFadeInOut) {
+    0% {
+        opacity: 0;
+        text-shadow: 0px 0px 100px $white;
+        -webkit-transform: scale(1.2) translateX(200px);
+    }
+    100% {
+        opacity: 1;
+        text-shadow: 0px 0px 1 $white;
+        -webkit-transform: scale(1) translateX(0);
+    }
+}
+
+/*===== effect: hover img =====*/
+@media screen and (min-width: 992px) {
+    /*===== zoom img =====*/
+    // .hoverZoom {
+    //     img {transition: 0.3s;}
+    //     &:before {content: ""; transition: 0.25s; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;}
+    //     *[class*="item"]:hover & {
+    //         &:before {background-color: rgba(0, 0, 0, 0.3);}
+    //         img {transform: scale(1.1);}
+    //     }
+    // }
+
+    .hoverZoom {
+        img {transition: 0.3s;}
+        &:hover img {transform: scale(1.1);}
+    }
+}
+.grayImage {
+    transition: filter .4s ease-in-out;
+    -webkit-filter: grayscale(100%); /* Ch 23+, Saf 6.0+, BB 10.0+ */
+    filter: grayscale(100%); /* FF 35+ */
+    @include resp(md) {
+        &:hover {filter: grayscale(0); -webkit-filter: grayscale(0);}
+    }
+}
+/*===== grayscale img - show text =====*/
+.imgEff {position: relative; overflow: hidden; width: 100%; text-align: left;
+    * {transition: all 0.6s ease;}
+    > div {background-color: $black;}
+    img {opacity: 0.8; width: 100%; vertical-align: top; transition: opacity 0.35s;}
+    figcaption {position: absolute; bottom: 0; left: 0; @include size(100%);
+        > div {overflow: hidden; position: relative; @include size(100%, 50%);}
+        h3 {margin: 0; color: $white; position: absolute; left: 0; bottom: 0; width: 100%; text-align: center; padding: 0 30px; opacity: 0; @include css3-prefix('transform', translateY(150%));}
+    }
+    @include resp(md) {
+        &:hover {
+            img {opacity: 0.3; -webkit-filter: grayscale(100%); filter: grayscale(100%);}
+            figcaption h3:nth-of-type(2) {opacity: 1; @include css3-prefix('transform', translateY(0));}
+        }
+    }
+}
+
+/*===== icon circle =====*/
+@mixin icEff($color: #000) {
+    $w: calc(100% + 8px);
+    position: relative;
+    &:before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include css3-prefix(transform, translate(-50%, -50%) scale(0.5));
+        @include size(#{$w});
+        @include border-radius(999px);
+        border: solid 1px $color;
+        opacity: 0;
+        -webkit-transition: opacity 0.25s, -webkit-transform 0.25s;
+        transition: opacity 0.25s, transform 0.25s;
+    }
+    @include resp(md) {
+        &:hover:before {opacity: 1; @include css3-prefix(transform, translate(-50%, -50%) scale(1));}
+    }
+}
+
+/*=====
+<a class="btn">
+  <span>
+    <span>
+      <span>Hover Me</span>
+    </span>
+  </span>
+</a>
+.btn {
+  @include border-slide(#252525, #168dff, 2px, 0.3s);
+}
+=====*/
+@mixin border-slide($color, $hoverColor, $borderWidth, $time) {
+    $easing: cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    display: inline-block;
+    padding: 0.5em 2em;
+    cursor: pointer;
+    overflow: hidden;
+    &:before, &:after {content: ""; position: absolute; left: 0; height: $borderWidth; width: 100%; background-color: $color;}
+    &:before {top: 0;}
+    &:after {bottom: 0;}
+    &:hover {
+      & > * {
+        & > * {
+          &:before, &:after {transform: translate3d(0, 0, 0);}
+          & > * {
+            &:before, &:after {transform: translate3d(0, 0, 0);}
+          }
+        }
+      }
+    }
+    & > * {
+      &:before, &:after {content: ""; position: absolute; top: 0; height: 100%; width: $borderWidth; background-color: $color;}
+      &:before {left: 0;}
+      &:after {right: 0;}
+      & > * {
+        &:before, &:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          z-index: 9;
+          height: $borderWidth;
+          width: 100%;
+          background-color: $hoverColor;
+        }
+        &:before {top: 0; transform: translate3d(-105%, 0, 0); transition: transform $time $easing;}
+        &:after {bottom: 0; transform: translate3d(105%, 0, 0); transition: transform $time $easing;}
+        & > * {
+          &:before, &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 9;
+            height: 100%;
+            width: $borderWidth;
+            background-color: $hoverColor;
+          }
+          &:before {left: 0; transform: translate3d(0, 105%, 0); transition: transform $time $easing;}
+          &:after {right: 0; transform: translate3d(0, -105%, 0); transition: transform $time $easing;}
+        }
+      }
+    }
+  }
+
+/*===== loading icon =====*/
+.loading {
+    &_ic{position: relative;
+        span {
+            @include size(60px);
+            position: absolute;
+            border-radius: 50%;
+            border: 0.3rem solid $white;
+            animation: 1.5s ripple infinite;
+            &:nth-child(2) {animation-delay: 0.5s; }
+        }
+    }
+}
+@keyframes ripple {
+    from {transform: scale(0); opacity: 1;}
+    to {transform: scale(1); opacity: 0;}
+}
+
+/*===== logo effect snap =====*/
+#logoEff {width: 100%;
+    &-path {fill-opacity: 0; fill: #231815; stroke: #231815; stroke-width: 1; stroke-linecap: round; stroke-dasharray: 600; stroke-dashoffset: 600;}
+}
+
+/*===== keyframes animation =====*/
+@include keyframes(menu-bar01) {
+    0% {-webkit-transform: translateY(10px) rotate(45deg);}
+    50% {-webkit-transform: translateY(10px) rotate(0);}
+    100% {-webkit-transform: translateY(0) rotate(0);}
+}
+@include keyframes(menu-bar02) {
+    0% {-webkit-transform: translateY(0) rotate(-45deg);}
+    50% {-webkit-transform: translateY(0) rotate(0);}
+    100% {-webkit-transform: translateY(0) rotate(0);}
+}
+@include keyframes(menu-bar03) {
+    0% {-webkit-transform: translateY(-10px); opacity: 0;}
+    50% {-webkit-transform: translateY(-10px); opacity: 0;}
+    100% {-webkit-transform: translateY(0); opacity: 1;}
+}
+@include keyframes(active-menu-bar01) {
+    0% {-webkit-transform: translateY(0) rotate(0);}
+    50% {-webkit-transform: translateY(20px) rotate(0);}
+    100% {-webkit-transform: translateY(20px) rotate(35deg);}
+}
+@include keyframes(active-menu-bar02) {
+    0% {-webkit-transform: translateY(0) rotate(0);}
+    50% {-webkit-transform: translateY(10px) rotate(0);}
+    100% {-webkit-transform: translateY(10px) rotate(-35deg);}
+}
+@include keyframes(active-menu-bar03) {
+    0% {-webkit-transform: translateY(0); opacity: 1;}
+    50% {-webkit-transform: translateY(-10px); opacity: 0;}
+    100% {-webkit-transform: translateY(-10px); opacity: 0;}
+}
+@include keyframes(bgRun-right_txt) {
+    0% {@include css3-prefix(transform, scaleX(0)); opacity: 0; transform-origin: center left;}
+    100% {@include css3-prefix(transform, scaleX(1)); opacity: 1; transform-origin: center left;}
+}
+@include keyframes(bgRun-right_bg) {
+    0% {@include css3-prefix(transform, scaleX(0)); transform-origin: center left;}
+    25% {@include css3-prefix(transform, scaleX(1)); transform-origin: center left;}
+    75% {@include css3-prefix(transform, scaleX(1)); transform-origin: center right;}
+    100% {@include css3-prefix(transform, scaleX(0)); transform-origin: center right;}
+}
+@include keyframes(icDown) {
+    0% {@include css3-prefix(transform, translateY(-1.5rem));}
+    100% {@include css3-prefix(transform, translateY(1.5rem));}
+}
+@include keyframes(circle-mask) {
+    0% {clip-path: circle(0 at center);}
+    30% {clip-path: circle(0 at center);}
+    100% {clip-path: circle(52rem at center);}
+}
+@include keyframes(lineScroll) {
+    0% {height: 0;}
+    45% {height: 100%;}
+    55% {height: 100%; top: 0;}
+    100% {height: 0; top: 100%;}
+}
+@include keyframes(lineScroll2) {
+    0% {height: 0; top: 100%;}
+    45% {height: 100%; top: 0;}
+    55% {height: 100%;}
+    100% {height: 0;}
+}
+@keyframes zoomIn {
+    from {transform: scale(0);}
+    to {transform: scale(1);}
+}

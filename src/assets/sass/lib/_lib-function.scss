@@ -1,0 +1,86 @@
+/*=============
+@function funcName ($variable1, $variable2, ...) {
+
+    @return Value;
+}
+
+VD:
+@function calMargin($a, $b){
+  @return $a*$b;
+}
+.class {
+  margin: calMargin(2, 5)*1px;
+}
+=============*/
+
+@function style-Shadow($n, $x, $y, $blur, $col, $inset: null) {
+    $shadow: '';
+    @for $i from 1 through $n {
+        $val: $inset $x $y $blur $col;
+        $shadow: $shadow + $val + ', ';
+    }
+    @return str_slice(unquote($shadow), 0, str_length($shadow)-2);
+}
+
+@function selector-parent($sel, $n) {
+    $selector: nth($sel,$n);
+    $direct-parent: nth($selector, length($selector));
+
+    @return $direct-parent;
+}
+// VD:
+// ul li p a {
+//   @at-root #{selector-parent(&, 1)} {
+//     .parent & { ... }
+//   }
+// }
+// ==> css
+// .parent a { ... }
+
+@function selector-nth($sel, $n, $f, $args...) {
+    $collector: ();
+    @each $s in $sel {
+        $modified: call($f, nth($s, $n), $args...);
+        $collector: append($collector, set-nth($s, $n, $modified), comma);
+    }
+
+    @return $collector;
+}
+@function append-class($a, $b) {
+    @return #{$a}#{$b};
+}
+// VD:
+// div {
+//   ul > li a {color: red;
+//     @at-root #{selector-nth(&, -2, append-class, '.baz')} {color: blue;}
+//   }
+// }
+// ==> css
+// .div ul > li a { color: red; }
+// .div ul > li.baz a { color: blue; }
+
+@function insert-selector($a, $b) {
+    @return $b $a;
+}
+// VD:
+// div {
+//   ul > li a {color: red;
+//     @at-root #{selector-nth(&, -2, insert-selector, '.baz')} {color: blue;}
+//   }
+// }
+// ==>
+// div ul > li a { color: red; }
+// div ul > .baz li a { color: blue; }
+
+@function remove-selector($sel) {
+    @return '';
+}
+// VD:
+// div {
+//   ul > li a {color: red;
+//     @at-root #{selector-nth(&, -2, remove-selector)} {color: blue;}
+//   }
+// }
+// ==> css
+// div ul > li a { color: red; }
+// div ul > a { color: blue; }

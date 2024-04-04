@@ -1,0 +1,107 @@
+$fpx: 0.625; // => .f10 {@include fSize(calc(#{$fpx}rem) !important);}
+$common_value: (
+    "10": 10px,
+    "15": 15px,
+    "20": 20px,
+    "25": 25px,
+    "30": 30px,
+    "35": 35px,
+    "40": 40px,
+    "45": 45px,
+    "50": 50px,
+    "55": 55px,
+    "60": 60px,
+    "64": 64px,
+    "65": 65px,
+    "70": 70px,
+    "75": 75px,
+    "80": 80px,
+    "85": 85px,
+    "90": 90px,
+    "95": 95px,
+    "100": 100px,
+) !default;
+$spacers_sp: map-merge(
+    $common_value,
+    (
+        "16": 16px,
+    ),
+);
+
+$spacers_pc: map-merge(
+    $common_value,
+    (
+        "16": 16px,
+    ),
+);
+
+@each $size, $length in $spacers_sp {
+    .m {
+        &x-#{$size} { margin-left: $length; margin-right: $length; }
+        &y-#{$size} { margin-top: $length; margin-bottom: $length; }
+        &-#{$size} { margin: $length; }
+        &t-#{$size} { margin-top: $length; }
+        &r-#{$size} { margin-right: $length; }
+        &b-#{$size} { margin-bottom: $length; }
+        &l-#{$size} { margin-left: $length; }
+    }
+    .p {
+        &x-#{$size} { padding-left: $length; padding-right: $length; }
+        &y-#{$size} { padding-top: $length; padding-bottom: $length; }
+        &-#{$size} { padding: $length; }
+        &t-#{$size} { padding-top: $length; }
+        &r-#{$size} { padding-right: $length; }
+        &b-#{$size} { padding-bottom: $length; }
+        &l-#{$size} { padding-left: $length; }
+    }
+}
+@include resp(md) {
+    @each $size, $length in $spacers_pc {
+        .m {
+            &x-md-#{$size} { margin-left: $length; margin-right: $length; }
+            &y-md-#{$size} { margin-top: $length; margin-bottom: $length; }
+            &-md-#{$size} { margin: $length; }
+            &t-md-#{$size} { margin-top: $length; }
+            &r-md-#{$size} { margin-right: $length; }
+            &b-md-#{$size} { margin-bottom: $length; }
+            &l-md-#{$size} { margin-left: $length; }
+        }
+        .p {
+            &x-md-#{$size} { padding-left: $length; padding-right: $length; }
+            &y-md-#{$size} { padding-top: $length; padding-bottom: $length; }
+            &-md-#{$size} { padding: $length; }
+            &t-md-#{$size} { padding-top: $length; }
+            &r-md-#{$size} { padding-right: $length; }
+            &b-md-#{$size} { padding-bottom: $length; }
+            &l-md-#{$size} { padding-left: $length; }
+        }
+    }
+}
+
+$common_line_value: (
+    
+) !default;
+$line_sp: map-merge(
+    $common_line_value,
+    (
+        
+    ),
+);
+$line_pc: map-merge(
+    $common_line_value,
+    (
+        
+    ),
+);
+@each $size, $length in $line_sp {
+    .l {
+        &-#{$size} { line-height: $length; }
+    }
+}
+@include resp(md) {
+    @each $size, $length in $line_pc {
+        .l-md {
+            &-#{$size} { line-height: $length; }
+        }
+    }
+}

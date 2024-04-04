@@ -1,0 +1,16 @@
+.mbody-home {
+  
+}
+.home-me {
+  @include resp(lg) {
+    background: url('../../../../../public/images/me.webp') no-repeat center top;
+    background-size: cover;
+  }
+}
+.name-cont {@include pd(t, 0, 10%); @include pd(x, 5%, 10%);}
+.myName {@include mg(t, 0, -20vh);
+  h1 {@include fSize(4vw, 10vw);
+    span {@include fSize(6vw, 15vw); color: var(--color-name);}
+  }
+  h2 {@include fSize(3vw, 8vw);}
+}

@@ -1,0 +1,67 @@
+$xs: 320px;
+$xxs: 414.98px;
+$sm: 575.98px;
+$md: 767.98px;
+$lg: 991.98px;
+$xl: 1199.98px;
+$xxl: 1279.98px;
+
+$main_font: 10px;
+
+$white: #fff;
+$black: #000;
+$light: #f5f5f5;
+$dark: #0f1018;
+$blue_l: #00bfff;
+$blue_d: #0039ad;
+$blue_d1: #0046d4;
+$col_main: #3b9dff;
+$col_txt: #191b2b;
+
+$col_tit: $col_main;
+$col_txt: $black;
+
+$headPC: 8.4rem;
+$headSP: 6rem;
+$actLine: 10px;
+
+.lightMode {
+  --co_main: #{$col_main};
+  --bg-switch-btn: #{$dark};
+  --nav-border: #{$col_main};
+  --nav-icon: #{$col_main};
+  
+  --btn-sty: #{$col_main};
+  --btn-sty-hover: transparent;
+  --btn-sty-border: #{$col_main};
+  --btn-sty-border-hover: #{$col_main};
+  --btn-download: #{$col_main};
+
+  --color-text: #{$dark};
+  --color-title: #{$col_main};
+  --color-name: #{$col_main};
+  --bg-p-items: #{$light};
+  --nav-text: #{$dark};
+
+  --timelines-dots: #{$dark};
+}
+.darkMode {
+  --co_main: #{$col_main};
+  --bg-switch-btn: #{$col_main};
+  --nav-border: #{$white};
+  --nav-icon: #{$white};
+  
+  --btn-sty: #{$col_main};
+  --btn-sty-hover: transparent;
+  --btn-sty-border: #{$col_main};
+  --btn-sty-border-hover: #{$col_main};
+  --btn-download: #{$col_main};
+
+  --color-text: #{$white};
+  --color-title: #{$white};
+  --color-name: #{$col_main};
+  --bg-p-items: #{$dark};
+  --nav-text: #{$white};
+
+  --timelines-dots: #{$col_main};
+}

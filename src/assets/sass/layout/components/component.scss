@@ -1,0 +1,89 @@
+@import './grid';
+@import './bg';
+@import './color';
+@import './button';
+@import './form';
+@import './font';
+@import './icon';
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Protest+Strike&display=swap');
+
+body {color: var(--color-text); display: flex; flex-direction: column; min-height: 100vh;
+    * {color: var(--color-text);}
+}
+main {display: flex; flex-direction: column; flex: 1 1 auto;}
+footer {text-align: center; @include pd(all, 15px, 12px 10px 70px 12px); border-top: solid 1px; transition: all 0.35s ease-in-out;}
+.f-poppins {font-family: "Protest Strike", sans-serif;}
+.nav {
+    &-controls {
+        @include position(fixed, null, null, 0, 0);
+        @include pd(y, 0, 10px);
+        background-color: rgba($dark, 0.7);
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        z-index: 10;
+        &-items {padding: 0; list-style: none; display: flex;
+            p {@include mg(all, 10px 0, 0 10px); cursor: pointer; position: relative;
+                &:before {@include posC(centerY); right: 115%; color: var(--nav-text); opacity: 0; pointer-events: none; white-space: nowrap; line-height: 1; transition: 0.3s;}
+                span {
+                    @include size(40px);
+                    @include flex(center, center);
+                    border: 3px solid var(--nav-border);
+                    border-radius: 50%;
+                    border-right: none;
+                    border-top: none;
+                    transition: 0.3s ease;
+                    i {color: var(--nav-icon);}
+                }
+                &:hover {
+                    &:before {opacity: 1;}
+                    span {
+                        border-top: 3px solid;
+                        border-right: 3px solid;
+                        background-color: $col_main;
+                        border-color: $white;
+                        @include css3-prefix(transform, rotate(360deg));
+                        i {color: $white;}
+                    }
+                }
+            }
+            &.active p span {background-color: $col_main; border-color: $white;
+                i {color: $white;}
+            }
+        }
+        @include resp(md) {width: auto; top: 50%; right: 20px; bottom: auto; left: auto; flex-direction: column; background-color: transparent; @include css3-prefix(transform, translateY(-50%));
+            &-items {
+                p {
+                    &:before {content: attr(data-title);}
+                    span {@include size(60px);}
+                }
+            }
+        }
+    }
+}
+.mbody {flex: 1 1 auto; display: none; position: relative; @include css3-prefix(transform, translateY(-100%) scale(0)); transition: all 0.35s ease-in-out;
+    &:not(&-home) {@include pd(all, 40px, 20px 20px 72px 20px);}
+    &-about {@include pd(x, 0 !important); @include pd(b, 0 !important, 72px !important);}
+    &.active {display: block; animation: appear 0.8s ease-in-out; @include css3-prefix(transform, translateY(0) scaleY(1));
+        @keyframes appear {
+            0%{ @include css3-prefix(transform, translateY(-100%) scaleY(0)); }
+            100%{ @include css3-prefix(transform, translateY(0) scaleY(1)); }
+        }
+    }
+    &-home + footer {
+        @include resp(md) {width: 58.33333333%; @include position(fixed, null, 0, 0); text-align: left; padding-left: 5%;}
+    }
+}
+.title {@include pd(x, calc(8.333335%), 0); @include pd(t, 40px, 60px); @include mg(b, 80px, 40px);
+    h1 {font-family: "Protest Strike", sans-serif; font-weight: bold; text-align: center; color: var(--color-title); @include fSize(7vw, 10vw); line-height: 1; margin-bottom: 0; position: relative;
+        &:after {content: attr(data-bg); font-family: "Protest Strike", sans-serif; @include posC(centerX); bottom: 0; width: 100%; color: var(--color-name); opacity: 0.1; font-size: 160%; pointer-events: none; z-index: -1;}
+    }
+    &-sub {@include mg(b, 60px, 60px);
+        h2 {font-family: "Protest Strike", sans-serif; font-weight: bold; color: var(--color-title); @include fSize(5vw, 7vw);}
+    }
+}
+.mCont {@include pd(x, 40px, 20px);}
+.break-spaces {white-space: break-spaces;}
+.loading {@include size(100vw, 100vh); @include position(fixed, 0, 0, 0, 0); @include flex(center, center); background-color: rgba($dark, 0.9); z-index: 9999;}
