@@ -111,29 +111,37 @@ const Contact: React.FC<Component1Props> = ({ className, setIsLoading }) => {
             <td>${formData.subject}</td>
           </tr>
           <tr>
-            <td><b>Message:</b></td>
+            <td style="vertical-align: top;"><b>Message:</b></td>
             <td style="white-space: break-spaces;">${formData.message}</td>
           </tr>
         </table><br />
         If the information is wrong, please contact me with the following information<br /><br />
-        ========================================================<br />
-        <h3 style="color: #3b9dff; margin-bottom: 0;">Akira Ht | LUONG HOANG SON</h3>
-        Website Designer | Frontend Developer<br /><br />
-        <table>
-          <tr>
-            <td><b>Website:</b></td>
-            <td><a href="https://akiraht.id.vn/" target="_blank">https://akiraht.id.vn/</a></td>
-          </tr>
-          <tr>
-            <td><b>Phone:</b></td>
-            <td>084.779.3566</td>
-          </tr>
-          <tr>
-            <td style="vertical-align: top;"><b>Email:</b></td>
-            <td>service@akiraht.id.vn<br/>sweb1705@gmail.com</td>
-          </tr>
-        </table>
-        ========================================================<br />
+        <div style="margin-top: 30px; padding-top: 30px; border-top: solid 3px #3b9dff;">
+          <div style="float: left;">
+            <img src="https://akiraht.id.vn/images/logo.png" style="width: 200px; display: inline-block; vertical-align: bottom; margin-right: 5px; margin-left: 5px; max-width: calc(100% - 10px); text-align: center;">
+          </div>
+          <div style="float: left; border-left: 4px solid #3b9dff; padding-left: 20px; margin-left: 20px;">
+            <h1 style="font-size: 20px; margin: 0px; text-transform: uppercase; font-weight: bold; color: #3b9dff;">Akira Ht | LUONG HOANG SON</h1>
+            Website Designer | Frontend Developer
+            <p>
+              <a href="https://akiraht.id.vn/" target="_blank">https://akiraht.id.vn</a>
+            </p>
+            <table>
+              <tr>
+                <td><b>Address:</b></td>
+                <td>154 Au Duong Lan St., 02 Ward, Dist. 08</td>
+              </tr>
+              <tr>
+                <td><b>Phone:</b></td>
+                <td>084.779.3566</td>
+              </tr>
+              <tr>
+                <td style="vertical-align: top;"><b>Email:</b></td>
+                <td>service@akiraht.id.vn<br/>sweb1705@gmail.com</td>
+              </tr>
+            </table>
+          </div>
+        </div>
       `;
 
       const emailData: EmailData = {
@@ -161,12 +169,10 @@ const Contact: React.FC<Component1Props> = ({ className, setIsLoading }) => {
         label: 'Contact Me'
       });
 
-      console.log('Email sent successfully');
       setValidated(false);
       setIsLoading(false);
       setShowModalTks(true);
     } catch (error) {
-      console.error('Error sending email:', error);
       setIsLoading(false);
     }
   };
