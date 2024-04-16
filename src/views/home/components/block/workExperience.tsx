@@ -12,9 +12,16 @@ const WorkExp = () => {
       <ul className='me-timeline-list'>
         <li className="list-items">
           <div className="list-items-body">
-            <p className='list-items_y'>05/2018 - PRESENT</p>
+            <p className='list-items_y'>10/2023 - PRESENT</p>
             <h4 className='list-items_p'>FREELANCER</h4>
             <h5 className='list-items_p2'>FRONT-END DEVELOPMENT</h5>
+          </div>
+        </li>
+        <li className="list-items">
+          <div className="list-items-body">
+            <p className='list-items_y'>05/2018 - 10/2023</p>
+            <h4 className='list-items_p'>Srang Company</h4>
+            <h5 className='list-items_p2'>Remote: FRONT-END DEVELOPMENT</h5>
             <div className='list-items_d'>
               <ul>
                 <li>Make ui/ux from photoshop, illustrator, figma, suppor modify design for client</li>
@@ -22,11 +29,8 @@ const WorkExp = () => {
                 <li>Working with:
                   <ul>
                     <li>HTML/CSS/SCSS, Bootstrap, Tailwindcss</li>
-                    <li>Javascript, Jquery</li>
-                    <li>Pugjs</li>
-                    <li>Reactjs, NextJS</li>
-                    <li>Laravel</li>
-                    <li>Wordpress</li>
+                    <li>Javascript, Jquery, Typescript</li>
+                    <li>Pugjs, Reactjs, NextJS, Laravel, Wordpress</li>
                     <li>Git</li>
                   </ul>
                 </li>

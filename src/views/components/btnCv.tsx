@@ -9,7 +9,7 @@ const BtnCv = () => {
       action: 'Clicked Download CV',
       label: 'Download My CV'
     });
-    const pdfUrl = 'https://drive.google.com/file/d/1I3tlMKn9DAVL4AAr16W3Vbl3V-EQUyb4/view?usp=sharing';
+    const pdfUrl = 'https://drive.google.com/file/d/1oNOmYMBTe0lnB7GavhiEin08EqIQeAqI/view?usp=sharing';
     window.open(pdfUrl, '_blank');
   }
 
